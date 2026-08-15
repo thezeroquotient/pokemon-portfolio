@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivank Goel · Portfolio</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: "Inter", "Segoe UI", system-ui, sans-serif; }
+
+    #home {
+      position: fixed; inset: 0; overflow: hidden;
+      background: #9ccb6a;            /* grass-green until the poster paints */
+      cursor: pointer;
+    }
+    #v {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center;
+      display: block; pointer-events: none;
+      transform: scale(1.08);
+      will-change: transform;
+    }
+    .hint {
+      position: absolute; left: 50%; bottom: 8%;
+      z-index: 3; margin: 0;
+      display: inline-flex; align-items: center; gap: 9px; white-space: nowrap;
+      padding: 10px 20px;
+      color: #234f28; font-weight: 700; font-size: 14px; letter-spacing: .01em;
+      background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.64));
+      border: 1px solid rgba(255,255,255,.9); border-radius: 999px;
+      box-shadow: 0 12px 28px rgba(26,60,28,.26), inset 0 1px 0 rgba(255,255,255,.95);
+      -webkit-backdrop-filter: blur(10px) saturate(1.3);
+      backdrop-filter: blur(10px) saturate(1.3);
+      transform: translate(-50%, 0);
+      animation: hintFloat 2.8s ease-in-out infinite;
+    }
+    #home.playing .hint {
+      opacity: 0; transform: translate(-50%, 10px);
+      transition: opacity .25s ease, transform .25s ease;
+    }
+    @keyframes hintFloat {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, -5px); }
+    }
+    @media (prefers-reduced-motion: reduce) { .hint, #v { animation: none; } }
+  </style>
+</head>
+<body>
+  <section id="home">
+    <video id="v" muted playsinline preload="auto" poster="poster.png">
+      <source src="home.mp4" type="video/mp4" />
+    </video>
+    <p class="hint">Tap to meet Shivank</p>
+  </section>
+
+  <script>
+    (function () {
+      var NEXT = "details.html";      // → /portfolio/details when deployed
+      var home = document.getElementById("home");
+      var v = document.getElementById("v");
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var busy = false, done = false;
+
+      // gentle idle bob + cursor-reactive lean, composed into one transform
+      var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0, t0 = 0;
+      function onMove(e) {
+        var r = home.getBoundingClientRect();
+        tx = (e.clientX - r.left - r.width / 2) / (r.width / 2);   // -1..1
+        ty = (e.clientY - r.top - r.height / 2) / (r.height / 2);  // -1..1
+      }
+      function recentre() { tx = 0; ty = 0; }                     // ease back when cursor leaves
+      function loop(now) {
+        if (!t0) t0 = now;
+        var bob = Math.sin((now - t0) / 3400 * 6.2832) * 1.1;      // gentle idle ±1.1%, ~3.4s
+        cx += (tx - cx) * 0.09;                                    // smoothly follow the cursor
+        cy += (ty - cy) * 0.09;
+        var X = (cx * 2.2).toFixed(2);
+        var Y = (bob + cy * 1.6).toFixed(2);
+        var rot = (cx * 1.8).toFixed(2);
+        v.style.transform = "scale(1.08) translate(" + X + "%," + Y + "%) rotate(" + rot + "deg)";
+        raf = requestAnimationFrame(loop);
+      }
+      if (!reduce) {
+        home.addEventListener("mousemove", onMove);
+        home.addEventListener("mouseleave", recentre);
+        raf = requestAnimationFrame(loop);
+      }
+
+      function go() { if (done) return; done = true; window.location.href = NEXT; }
+      v.addEventListener("ended", go);
+
+      home.addEventListener("click", function () {
+        if (busy) return;
+        busy = true;
+        if (raf) cancelAnimationFrame(raf);          // freeze the ball where it is
+        home.removeEventListener("mousemove", onMove);
+        home.classList.add("playing");
+        if (reduce) { go(); return; }
+        var p = v.play();                // already at frame 0 — no seek, no hitch
+        if (p && p.catch) p.catch(go);   // if playback is blocked, just navigate
+        setTimeout(go, 900);             // safety net (video is ~0.6s)
+      });
+    })();
+  </script>
+</body>
+</html>

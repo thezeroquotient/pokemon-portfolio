@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivank Goel · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body>
+  <!-- fades out on load so arriving from the ball's white flash is seamless -->
+  <div class="page-in" aria-hidden="true"></div>
+
+  <!-- ============ THE PAGE ============ -->
+  <main id="info" class="view is-active">
+
+    <!-- ambient sky: drifting clouds pinned to the top of the view -->
+    <div class="scene" aria-hidden="true">
+      <span class="cloud c1"></span>
+      <span class="cloud c2"></span>
+      <span class="cloud c3"></span>
+      <span class="cloud c4"></span>
+    </div>
+
+    <div class="site">
+
+      <div class="site-top">
+        <a href="index.html" class="pdx-back" aria-label="Back to grass">
+          <span class="pdx-back-arrow">←</span> Back to Grass
+        </a>
+      </div>
+
+      <!-- left: profile sidebar -->
+      <aside class="side">
+        <div class="side-tag"><span class="mini-ball"></span>Pokémon Details</div>
+        <div class="side-hero">
+          <!-- standing trainer: save your PNG as avatar.png in the project folder -->
+          <div class="side-shadow" aria-hidden="true"></div>
+          <img class="side-avatar" src="avatar.png" alt="Shivank Goel"
+               onload="var p=document.getElementById('tcgPhoto'); if(p){p.style.display='none';}"
+               onerror="this.remove();" />
+          <div class="pdx-photo" id="tcgPhoto"><span>★</span></div>
+          <div class="side-stats" aria-hidden="true">
+            <span class="side-stat ht"><i>HT</i>5'11"</span>
+            <span class="side-stat wt"><i>WT</i>67 kg</span>
+          </div>
+        </div>
+        <h1 class="side-name">Shivank Goel</h1>
+        <p class="side-role">Product @ Amex · Creator (400K+)</p>
+        <p class="side-tagline">Building products by day, making content by night.</p>
+
+        <div class="side-facts">
+          <span><i>📍</i>Bengaluru, India</span>
+        </div>
+
+        <div class="side-block">
+          <span class="side-label">Skills</span>
+          <div class="pdx-chips side-chips">
+            <span class="pdx-chip">Product Strategy</span>
+            <span class="pdx-chip">0→1 Products</span>
+            <span class="pdx-chip">User Research</span>
+            <span class="pdx-chip">Roadmapping</span>
+            <span class="pdx-chip">Agile &amp; Scrum</span>
+            <span class="pdx-chip">SQL &amp; Analytics</span>
+          </div>
+        </div>
+
+        <div class="side-block">
+          <span class="side-label">Links</span>
+          <div class="side-links">
+            <a href="https://www.linkedin.com/in/thezeroquotient/" target="_blank" rel="noopener">LinkedIn <span>↗</span></a>
+            <a href="mailto:thezeroquotient@create.wtf">Email <span>↗</span></a>
+          </div>
+        </div>
+      </aside>
+
+      <!-- right: content (stacked sections) -->
+      <section class="main">
+
+        <!-- About -->
+        <section class="sec">
+          <h2 class="sec-title">About</h2>
+          <p class="pdx-lead">
+            I'm Shivank, a Product Manager, content creator, builder, reader, and occasional DIY engineer.
+          </p>
+          <p class="pdx-lead" style="margin-top:16px;">
+            I like making complicated things simple and finding humour in the mildly chaotic experience of
+            being an ambitious person who also just wants to sit at home, and read a book.
+          </p>
+          <p class="pdx-lead" style="margin-top:16px;">
+            Most of what I make lives somewhere between technology, creativity, work, adulthood, and
+            figuring out how the hell to have a life outside your job.
+          </p>
+          <p class="pdx-lead" style="margin-top:16px;">
+            Want to talk? You can reach me by emailing
+            <a href="mailto:thezeroquotient@create.wtf">thezeroquotient@create.wtf</a>.
+          </p>
+        </section>
+
+        <!-- Experience (company list ← → details) -->
+        <section class="sec">
+          <h2 class="sec-title">Experience</h2>
+          <div class="xp" id="xp">
+            <div class="xp-tabs" role="tablist">
+              <button class="xp-co is-active" data-co="0">American Express</button>
+              <button class="xp-co" data-co="1">Sprinto</button>
+              <button class="xp-co" data-co="2">Springworks</button>
+              <button class="xp-co" data-co="3">Arthmate</button>
+              <button class="xp-co" data-co="4">NimbleWork</button>
+            </div>
+            <div class="xp-details">
+              <div class="xp-detail is-active" data-co="0">
+                <h4>Product Manager <span>@ American Express</span></h4>
+                <p class="xp-date">Aug 2024 - Present · Bengaluru</p>
+                <ul>
+                  <li>Currently working on smoothening the merchant onboarding journey.</li>
+                  <li>Worked on an enterprise data-quality tool, end to end, in my last team.</li>
+                </ul>
+              </div>
+              <div class="xp-detail" data-co="1">
+                <h4>Associate PM, Founding <span>@ Sprinto</span></h4>
+                <p class="xp-date">Jan 2023 - Aug 2024 · Bengaluru</p>
+                <ul>
+                  <li>Scaled products 0→1, then 1→X; owned the compliance-automation roadmap.</li>
+                  <li>Drove activation and product-led growth as the company went Series A → B.</li>
+                  <li>Learned good culture isn't a perk; it's what makes hard work sustainable.</li>
+                </ul>
+              </div>
+              <div class="xp-detail" data-co="2">
+                <h4>Associate Product Manager <span>@ Springworks</span></h4>
+                <p class="xp-date">Apr 2022 - Dec 2022 · Bengaluru</p>
+                <ul>
+                  <li>Improved HR-tech products through user interviews.</li>
+                  <li>Independently owned solutioning, wireframing, grooming, and testing.</li>
+                  <li>Grew fast in a high-chaos environment; left wiser and thoroughly burnt out.</li>
+                </ul>
+              </div>
+              <div class="xp-detail" data-co="3">
+                <h4>Associate PM, Founding <span>@ Arthmate</span></h4>
+                <p class="xp-date">Aug 2021 - Mar 2022 · Gurugram</p>
+                <ul>
+                  <li>First office job. Showed up on time and wore pants.</li>
+                  <li>Learned the fundamentals: PRDs, scrum, Jira tickets, and API docs.</li>
+                  <li>The silent sitter in every strategy meeting (for a while).</li>
+                </ul>
+              </div>
+              <div class="xp-detail" data-co="4">
+                <h4>Product Implementation Consultant <span>@ NimbleWork</span></h4>
+                <p class="xp-date">Feb 2021 - Jul 2021 · Bengaluru</p>
+                <ul>
+                  <li>Handled documentation, story-point estimation, and some coding.</li>
+                  <li>Made friends who wouldn't let me believe the imposter in my head.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Projects -->
+        <section class="sec">
+          <h2 class="sec-title">Side Quests</h2>
+          <div class="pdx-projects">
+            <a class="pdx-proj" href="https://www.instagram.com/thezeroquotient/" target="_blank" rel="noopener">
+              <div><h4>Instagram</h4><p>My main character arc, aka P0.</p></div>
+              <span class="pdx-proj-arrow">↗</span>
+            </a>
+            <a class="pdx-proj" href="https://www.youtube.com/@thezeroquotient" target="_blank" rel="noopener">
+              <div><h4>YouTube</h4><p>The same content as Insta for now, but a lot of long-form videos are coming. Keep a lookout.</p></div>
+              <span class="pdx-proj-arrow">↗</span>
+            </a>
+            <a class="pdx-proj" href="https://substack.com/@thezeroquotient" target="_blank" rel="noopener">
+              <div><h4>Substack</h4><p>I'm new here.</p></div>
+              <span class="pdx-proj-arrow">↗</span>
+            </a>
+            <a class="pdx-proj" href="https://topmate.io/thezeroquotient" target="_blank" rel="noopener">
+              <div><h4>Mentoring PMs</h4><p>1:1 sessions helping people break into product, no gatekeeping.</p></div>
+              <span class="pdx-proj-arrow">↗</span>
+            </a>
+          </div>
+        </section>
+
+      </section>
+    </div>
+
+    <!-- playful footer: drop a Pokémon into the crowd -->
+    <footer class="pfoot">
+      <div class="pfoot-cta">
+        <p class="pfoot-title">Gotta catch 'em all</p>
+        <p class="pfoot-sub">Every visitor leaves a Pokémon behind. Add yours to the crowd.</p>
+        <button id="pfootBtn" class="pfoot-btn">＋ Drop a Pokémon</button>
+        <span id="pfootCount" class="pfoot-count">…</span>
+      </div>
+      <div class="pfoot-stage" id="pfootStage"></div>
+      <div class="pfoot-ground" aria-hidden="true"></div>
+    </footer>
+  </main>
+
+  <script src="script.js?v=32"></script>
+</body>
+</html>

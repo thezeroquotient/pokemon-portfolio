@@ -1,0 +1,18 @@
+# macOS / Python
+.DS_Store
+__pycache__/
+*.pyc
+
+# runtime data (the live drop counter store)
+pokedrops.json
+
+# heavy source frames & iteration backups — not needed to run the site
+anim/
+Archive/
+Archive 2/
+framer/
+home-*.mp4
+grass-orig.jpg
+
+# Claude Code local tooling
+.claude/

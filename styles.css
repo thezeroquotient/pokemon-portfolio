@@ -812,6 +812,19 @@ html, body {
   border: 5px solid transparent; border-top-color: #2b3560;
 }
 .pfoot-mon:hover .pfoot-name { opacity: 1; transform: translateX(-50%) translateY(0) scale(var(--inv, 1)); }
+
+/* small legal / fan-work footer under the crowd */
+.legal {
+  position: relative; z-index: 2;
+  background: #5f9a34;
+  color: rgba(255, 255, 255, .85);
+  text-align: center;
+  padding: 20px 22px 26px;
+  font-size: 11.5px; line-height: 1.65;
+}
+.legal p { max-width: 660px; margin: 0 auto; }
+.legal p + p { margin-top: 8px; }
+.legal a { color: #fff; }
 @keyframes monpop {
   0%   { opacity: 0; transform: translateY(74px) scale(.4) rotate(0); }
   60%  { opacity: 1; }

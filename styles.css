@@ -825,6 +825,7 @@ html, body {
 .legal p { max-width: 540px; margin: 0 auto; }
 .legal p + p { margin-top: 3px; }
 .legal a { color: rgba(255, 255, 255, .9); }
+.legal-sign { margin-top: 7px; color: rgba(255, 255, 255, .82); }
 @keyframes monpop {
   0%   { opacity: 0; transform: translateY(74px) scale(.4) rotate(0); }
   60%  { opacity: 1; }

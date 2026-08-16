@@ -816,15 +816,15 @@ html, body {
 /* small legal / fan-work footer under the crowd */
 .legal {
   position: relative; z-index: 2;
-  background: #5f9a34;
-  color: rgba(255, 255, 255, .85);
+  background: #52822c;
+  color: rgba(255, 255, 255, .66);
   text-align: center;
-  padding: 20px 22px 26px;
-  font-size: 11.5px; line-height: 1.65;
+  padding: 12px 20px 15px;
+  font-size: 10px; line-height: 1.5;
 }
-.legal p { max-width: 660px; margin: 0 auto; }
-.legal p + p { margin-top: 8px; }
-.legal a { color: #fff; }
+.legal p { max-width: 540px; margin: 0 auto; }
+.legal p + p { margin-top: 3px; }
+.legal a { color: rgba(255, 255, 255, .9); }
 @keyframes monpop {
   0%   { opacity: 0; transform: translateY(74px) scale(.4) rotate(0); }
   60%  { opacity: 1; }

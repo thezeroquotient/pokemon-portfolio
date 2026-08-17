@@ -57,6 +57,9 @@
         object-fit: fill;
         transform: translate(-50%, -50%) !important;
         animation: none !important;
+        /* fade the video's top/bottom edges into the grass bg (no seam line) */
+        -webkit-mask: linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%);
+                mask: linear-gradient(to bottom, transparent 0, #000 15%, #000 85%, transparent 100%);
       }
     }
   </style>

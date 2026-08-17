@@ -46,6 +46,19 @@
       50%      { transform: translate(-50%, -5px); }
     }
     @media (prefers-reduced-motion: reduce) { .hint, #v { animation: none; } }
+
+    /* portrait phones: cover-cropping clips the ball, so fit it and let the
+       grass background fill the rest instead */
+    @media (max-aspect-ratio: 5/8) {
+      #home { background: #9ccb6a center center / cover no-repeat url("grass.jpg"); }
+      #v {
+        inset: auto; left: 50%; top: 50%;
+        width: 175vw; height: auto;
+        object-fit: fill;
+        transform: translate(-50%, -50%) !important;
+        animation: none !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -83,7 +96,8 @@
         v.style.transform = "scale(1.08) translate(" + X + "%," + Y + "%) rotate(" + rot + "deg)";
         raf = requestAnimationFrame(loop);
       }
-      if (!reduce) {
+      // wobble/cursor-lean only on devices with a real pointer (skip on touch)
+      if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
         home.addEventListener("mousemove", onMove);
         home.addEventListener("mouseleave", recentre);
         raf = requestAnimationFrame(loop);

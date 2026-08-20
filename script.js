@@ -452,6 +452,11 @@ let startInfoReveals = () => {};
 
   async function drop() {
     if (dropped) return;
+    dropped = true;
+    if (btn) {
+      btn.disabled = true;
+      btn.textContent = "Dropping…";
+    }
     try {
       const r = await fetch("/api/pokedrops", { method: "POST" });
       if (!r.ok) throw 0;

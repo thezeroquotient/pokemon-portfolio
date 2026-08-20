@@ -104,15 +104,15 @@
         <section class="sec">
           <h2 class="sec-title">Experience</h2>
           <div class="xp" id="xp">
-            <div class="xp-tabs" role="tablist">
-              <button class="xp-co is-active" data-co="0">American Express</button>
-              <button class="xp-co" data-co="1">Sprinto</button>
-              <button class="xp-co" data-co="2">Springworks</button>
-              <button class="xp-co" data-co="3">Arthmate</button>
-              <button class="xp-co" data-co="4">NimbleWork</button>
+            <div class="xp-tabs" role="tablist" aria-label="Work experience">
+              <button class="xp-co is-active" id="xp-tab-0" role="tab" aria-selected="true" aria-controls="xp-panel-0" tabindex="0" data-co="0">American Express</button>
+              <button class="xp-co" id="xp-tab-1" role="tab" aria-selected="false" aria-controls="xp-panel-1" tabindex="-1" data-co="1">Sprinto</button>
+              <button class="xp-co" id="xp-tab-2" role="tab" aria-selected="false" aria-controls="xp-panel-2" tabindex="-1" data-co="2">Springworks</button>
+              <button class="xp-co" id="xp-tab-3" role="tab" aria-selected="false" aria-controls="xp-panel-3" tabindex="-1" data-co="3">Arthmate</button>
+              <button class="xp-co" id="xp-tab-4" role="tab" aria-selected="false" aria-controls="xp-panel-4" tabindex="-1" data-co="4">NimbleWork</button>
             </div>
             <div class="xp-details">
-              <div class="xp-detail is-active" data-co="0">
+              <div class="xp-detail is-active" id="xp-panel-0" role="tabpanel" aria-labelledby="xp-tab-0" data-co="0">
                 <h4>Product Manager <span>@ American Express</span></h4>
                 <p class="xp-date">Aug 2024 - Present · Bengaluru</p>
                 <ul>
@@ -120,7 +120,7 @@
                   <li>Worked on an enterprise data-quality tool, end to end, in my last team.</li>
                 </ul>
               </div>
-              <div class="xp-detail" data-co="1">
+              <div class="xp-detail" id="xp-panel-1" role="tabpanel" aria-labelledby="xp-tab-1" hidden data-co="1">
                 <h4>Associate PM, Founding <span>@ Sprinto</span></h4>
                 <p class="xp-date">Jan 2023 - Aug 2024 · Bengaluru</p>
                 <ul>
@@ -129,7 +129,7 @@
                   <li>Learned good culture isn't a perk; it's what makes hard work sustainable.</li>
                 </ul>
               </div>
-              <div class="xp-detail" data-co="2">
+              <div class="xp-detail" id="xp-panel-2" role="tabpanel" aria-labelledby="xp-tab-2" hidden data-co="2">
                 <h4>Associate Product Manager <span>@ Springworks</span></h4>
                 <p class="xp-date">Apr 2022 - Dec 2022 · Bengaluru</p>
                 <ul>
@@ -138,7 +138,7 @@
                   <li>Grew fast in a high-chaos environment; left wiser and thoroughly burnt out.</li>
                 </ul>
               </div>
-              <div class="xp-detail" data-co="3">
+              <div class="xp-detail" id="xp-panel-3" role="tabpanel" aria-labelledby="xp-tab-3" hidden data-co="3">
                 <h4>Associate PM, Founding <span>@ Arthmate</span></h4>
                 <p class="xp-date">Aug 2021 - Mar 2022 · Gurugram</p>
                 <ul>
@@ -147,7 +147,7 @@
                   <li>The silent sitter in every strategy meeting (for a while).</li>
                 </ul>
               </div>
-              <div class="xp-detail" data-co="4">
+              <div class="xp-detail" id="xp-panel-4" role="tabpanel" aria-labelledby="xp-tab-4" hidden data-co="4">
                 <h4>Product Implementation Consultant <span>@ NimbleWork</span></h4>
                 <p class="xp-date">Feb 2021 - Jul 2021 · Bengaluru</p>
                 <ul>

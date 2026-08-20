@@ -13,8 +13,9 @@
     #home {
       position: fixed; inset: 0; overflow: hidden;
       background: #9ccb6a;            /* grass-green until the poster paints */
-      cursor: pointer;
+      width: 100%; border: 0; text-align: initial; cursor: pointer;
     }
+    #home:focus-visible { outline: 4px solid #fff; outline-offset: -8px; }
     #v {
       position: absolute; inset: 0;
       width: 100%; height: 100%;
@@ -65,12 +66,12 @@
   </style>
 </head>
 <body>
-  <section id="home">
+  <button id="home" type="button" aria-label="Meet Shivank">
     <video id="v" muted playsinline preload="auto" poster="poster.png">
       <source src="home.mp4" type="video/mp4" />
     </video>
     <p class="hint">Tap to meet Shivank</p>
-  </section>
+  </button>
 
   <script>
     (function () {

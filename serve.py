@@ -13,6 +13,7 @@ import http.server
 import os
 import json
 import random
+import tempfile
 from functools import partial
 
 PORT = 3210
@@ -23,12 +24,24 @@ ID_MIN, ID_MAX = 1, 1025         # official-artwork exists reliably in this rang
 MAX_RECENT = 40                  # how many of the crowd we show (count stays the true total)
 
 
+class StateError(Exception):
+    """The persisted drop state could not be read safely."""
+
+
 def load_dropped():
     try:
         with open(DATA) as f:
-            return json.load(f).get("dropped", [])
-    except (FileNotFoundError, json.JSONDecodeError):
+            state = json.load(f)
+    except FileNotFoundError:
         return []
+    except (OSError, json.JSONDecodeError) as exc:
+        raise StateError(f"could not read {DATA}: {exc}") from exc
+    dropped = state.get("dropped") if isinstance(state, dict) else None
+    if not isinstance(dropped, list) or not all(
+        isinstance(item, int) and ID_MIN <= item <= ID_MAX for item in dropped
+    ):
+        raise StateError(f"invalid drop state in {DATA}")
+    return dropped
 
 
 def load_state():
@@ -38,8 +51,19 @@ def load_state():
 
 
 def save_dropped(dropped):
-    with open(DATA, "w") as f:
-        json.dump({"dropped": dropped}, f)
+    temporary = None
+    try:
+        with tempfile.NamedTemporaryFile(
+            "w", dir=DIRECTORY, prefix=".pokedrops-", delete=False
+        ) as f:
+            temporary = f.name
+            json.dump({"dropped": dropped}, f)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(temporary, DATA)
+    finally:
+        if temporary and os.path.exists(temporary):
+            os.unlink(temporary)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -59,7 +83,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path.split("?")[0] == "/api/pokedrops":
-            return self._json(load_state())
+            try:
+                return self._json(load_state())
+            except StateError as exc:
+                self.log_error("%s", exc)
+                return self._json({"error": "drop state unavailable"}, 500)
         return super().do_GET()
 
     def do_POST(self):
@@ -68,7 +96,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             length = int(self.headers.get("Content-Length") or 0)
             if length:
                 self.rfile.read(length)
-            dropped = load_dropped()
+            try:
+                dropped = load_dropped()
+            except StateError as exc:
+                self.log_error("%s", exc)
+                return self._json({"error": "drop state unavailable"}, 500)
             new_id = random.randint(ID_MIN, ID_MAX)
             dropped.append(new_id)
             save_dropped(dropped)

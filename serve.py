@@ -2,8 +2,8 @@
 """Static server for the portfolio, plus a tiny shared "Pokémon drop" store.
 
 - No-cache headers so edits always show on reload.
-- GET  /api/state  -> {"count": N, "recent": [ids...]}   (the shared crowd)
-- POST /api/drop   -> adds one random Pokémon, returns {"count", "added"}
+- GET  /api/pokedrops  -> {"count": N, "recent": [ids...]} (the shared crowd)
+- POST /api/pokedrops  -> adds one random Pokémon, returns {"count", "added"}
 
 State persists to pokedrops.json next to this file, so it is shared across
 every visitor of this server and survives restarts. Becomes truly global once
@@ -16,6 +16,7 @@ import random
 from functools import partial
 
 PORT = 3210
+API_PATH = "/api/pokedrops"
 DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(DIRECTORY, "pokedrops.json")
 
@@ -58,12 +59,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self):
-        if self.path.split("?")[0] == "/api/pokedrops":
+        if self.path.split("?")[0] == API_PATH:
             return self._json(load_state())
         return super().do_GET()
 
     def do_POST(self):
-        if self.path.split("?")[0] == "/api/pokedrops":
+        if self.path.split("?")[0] == API_PATH:
             # drain any request body so the connection stays clean
             length = int(self.headers.get("Content-Length") or 0)
             if length:

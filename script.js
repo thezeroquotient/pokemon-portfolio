@@ -337,12 +337,41 @@ let startInfoReveals = () => {};
 (function xpTabs() {
   const wrap = document.getElementById("xp");
   if (!wrap) return;
+  const tabs = Array.from(wrap.querySelectorAll(".xp-co"));
+
+  function selectTab(btn) {
+    const i = btn.dataset.co;
+    tabs.forEach((x) => {
+      const active = x === btn;
+      x.classList.toggle("is-active", active);
+      x.setAttribute("aria-selected", String(active));
+      x.tabIndex = active ? 0 : -1;
+    });
+    wrap.querySelectorAll(".xp-detail").forEach((panel) => {
+      const active = panel.dataset.co === i;
+      panel.classList.toggle("is-active", active);
+      panel.hidden = !active;
+    });
+  }
+
   wrap.addEventListener("click", (e) => {
     const btn = e.target.closest(".xp-co");
-    if (!btn) return;
-    const i = btn.dataset.co;
-    wrap.querySelectorAll(".xp-co").forEach((x) => x.classList.toggle("is-active", x === btn));
-    wrap.querySelectorAll(".xp-detail").forEach((d) => d.classList.toggle("is-active", d.dataset.co === i));
+    if (btn) selectTab(btn);
+  });
+
+  wrap.addEventListener("keydown", (e) => {
+    const current = e.target.closest(".xp-co");
+    if (!current) return;
+    const index = tabs.indexOf(current);
+    let next = index;
+    if (e.key === "ArrowRight") next = (index + 1) % tabs.length;
+    else if (e.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = tabs.length - 1;
+    else return;
+    e.preventDefault();
+    selectTab(tabs[next]);
+    tabs[next].focus();
   });
 })();
 

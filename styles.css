@@ -96,10 +96,10 @@ html, body {
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255,255,255,.9), rgba(255,255,255,0) 70%);
   pointer-events: none;
-  animation: drift var(--dur, 12s) linear infinite;
+  animation: moteDrift var(--dur, 12s) linear infinite;
   animation-delay: var(--delay, 0s);
 }
-@keyframes drift {
+@keyframes moteDrift {
   0%   { transform: translate(0, 0); opacity: 0; }
   10%  { opacity: .8; }
   90%  { opacity: .8; }
@@ -442,11 +442,11 @@ html, body {
 }
 .cloud::before { width: 62px; height: 62px; left: 24px; top: 8px; }
 .cloud::after  { width: 38px; height: 38px; left: -16px; top: 12px; }
-.cloud.c1 { top: 34px; left: 6%;  transform: scale(.9);  animation: drift 70s linear infinite; }
-.cloud.c2 { top: 74px; left: 42%; transform: scale(1.15); animation: drift 96s linear -22s infinite; }
-.cloud.c3 { top: 18px; left: 68%; transform: scale(.7);  animation: drift 60s linear -36s infinite; }
-.cloud.c4 { top: 104px; left: 86%; transform: scale(1);  animation: drift 112s linear -55s infinite; }
-@keyframes drift { from { margin-left: -180px; } to { margin-left: 105vw; } }
+.cloud.c1 { top: 34px; left: 6%;  transform: scale(.9);  animation: cloudDrift 70s linear infinite; }
+.cloud.c2 { top: 74px; left: 42%; transform: scale(1.15); animation: cloudDrift 96s linear -22s infinite; }
+.cloud.c3 { top: 18px; left: 68%; transform: scale(.7);  animation: cloudDrift 60s linear -36s infinite; }
+.cloud.c4 { top: 104px; left: 86%; transform: scale(1);  animation: cloudDrift 112s linear -55s infinite; }
+@keyframes cloudDrift { from { margin-left: -180px; } to { margin-left: 105vw; } }
 
 /* two-column website layout: sticky profile + wide content */
 .site {

@@ -542,7 +542,7 @@ html, body {
   position: absolute; inset: 0; z-index: 3; pointer-events: none;
   opacity: 0; transition: opacity .22s ease;
 }
-.side-hero:hover .side-stats { opacity: 1; }
+.side-hero:hover .side-stats, .side-hero:focus .side-stats { opacity: 1; }
 .side-stat {
   position: absolute; top: 12px;
   display: inline-flex; align-items: baseline; gap: 5px;
@@ -552,7 +552,12 @@ html, body {
   -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
   transform: translateY(-5px); transition: transform .22s ease;
 }
-.side-hero:hover .side-stat { transform: translateY(0); }
+.side-hero:hover .side-stat, .side-hero:focus .side-stat { transform: translateY(0); }
+.side-hero:focus-visible { outline: 3px solid #2fa36b; outline-offset: 3px; }
+@media (hover: none) {
+  .side-stats { opacity: 1; }
+  .side-stat { transform: translateY(0); }
+}
 .side-stat i { font-style: normal; font-size: 10px; opacity: .7; font-weight: 800; letter-spacing: .05em; }
 .side-stat.ht { left: 12px; }
 .side-stat.wt { right: 12px; }

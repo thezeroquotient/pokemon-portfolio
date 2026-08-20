@@ -36,16 +36,16 @@
       <!-- left: profile sidebar -->
       <aside class="side">
         <div class="side-tag"><span class="mini-ball"></span>Pokémon Details</div>
-        <div class="side-hero">
+        <div class="side-hero" role="group" aria-label="Trainer profile statistics" tabindex="0">
           <!-- standing trainer: save your PNG as avatar.png in the project folder -->
           <div class="side-shadow" aria-hidden="true"></div>
           <img class="side-avatar" src="avatar.png" alt="Shivank Goel"
                onload="var p=document.getElementById('tcgPhoto'); if(p){p.style.display='none';}"
                onerror="this.remove();" />
           <div class="pdx-photo" id="tcgPhoto"><span>★</span></div>
-          <div class="side-stats" aria-hidden="true">
-            <span class="side-stat ht"><i>HT</i>5'11"</span>
-            <span class="side-stat wt"><i>WT</i>67 kg</span>
+          <div class="side-stats">
+            <span class="side-stat ht" aria-label="Height: 5 feet 11 inches"><i>HT</i>5'11"</span>
+            <span class="side-stat wt" aria-label="Weight: 67 kilograms"><i>WT</i>67 kg</span>
           </div>
         </div>
         <h1 class="side-name">Shivank Goel</h1>

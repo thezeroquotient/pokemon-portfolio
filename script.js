@@ -440,14 +440,18 @@ let startInfoReveals = () => {};
   async function load() {
     try {
       const r = await fetch("/api/pokedrops", { cache: "no-store" });
+      if (r.status === 404) {
+        backendAvailable = false;
+        return;
+      }
       if (!r.ok) throw 0;
       backendAvailable = true;
       const d = await r.json();
       if (typeof d.count === "number") globalCount = d.count;
       (d.recent || []).forEach((id) => render(id, false));
     } catch (e) {
-      // no backend (opened as a file / offline): just start empty
-      backendAvailable = false;
+      // A temporary failure remains retryable when the visitor clicks the button.
+      if (window.location.protocol === "file:") backendAvailable = false;
     }
     fit();
     refreshCount();

@@ -23,23 +23,29 @@ ID_MIN, ID_MAX = 1, 1025         # official-artwork exists reliably in this rang
 MAX_RECENT = 40                  # how many of the crowd we show (count stays the true total)
 
 
-def load_dropped():
+def load_state():
     try:
         with open(DATA) as f:
-            return json.load(f).get("dropped", [])
+            state = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
-        return []
+        return {"count": 0, "recent": []}
+
+    # Migrate the original unbounded format without losing its total.
+    if "dropped" in state:
+        dropped = state.get("dropped", [])
+        return {"count": len(dropped), "recent": dropped[-MAX_RECENT:]}
+    return {
+        "count": max(0, int(state.get("count", 0))),
+        "recent": list(state.get("recent", []))[-MAX_RECENT:],
+    }
 
 
-def load_state():
-    """count is the true global total; recent is just the last MAX_RECENT shown."""
-    dropped = load_dropped()
-    return {"count": len(dropped), "recent": dropped[-MAX_RECENT:]}
-
-
-def save_dropped(dropped):
+def save_state(state):
     with open(DATA, "w") as f:
-        json.dump({"dropped": dropped}, f)
+        json.dump({
+            "count": state["count"],
+            "recent": state["recent"][-MAX_RECENT:],
+        }, f)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -68,11 +74,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             length = int(self.headers.get("Content-Length") or 0)
             if length:
                 self.rfile.read(length)
-            dropped = load_dropped()
+            state = load_state()
             new_id = random.randint(ID_MIN, ID_MAX)
-            dropped.append(new_id)
-            save_dropped(dropped)
-            return self._json({"count": len(dropped), "added": new_id})
+            state["count"] += 1
+            state["recent"].append(new_id)
+            state["recent"] = state["recent"][-MAX_RECENT:]
+            save_state(state)
+            return self._json({"count": state["count"], "added": new_id})
         self.send_error(404)
 
 

@@ -21,6 +21,22 @@ DATA = os.path.join(DIRECTORY, "pokedrops.json")
 
 ID_MIN, ID_MAX = 1, 1025         # official-artwork exists reliably in this range
 MAX_RECENT = 40                  # how many of the crowd we show (count stays the true total)
+MAX_REQUEST_BODY = 1024          # the endpoint ignores bodies; cap them defensively
+
+
+def parse_content_length(value):
+    """Return a safe body length, raising for malformed or oversized values."""
+    if value is None:
+        return 0
+    try:
+        length = int(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid Content-Length") from exc
+    if length < 0:
+        raise ValueError("negative Content-Length")
+    if length > MAX_REQUEST_BODY:
+        raise OverflowError("request body too large")
+    return length
 
 
 def load_dropped():
@@ -65,7 +81,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         if self.path.split("?")[0] == "/api/pokedrops":
             # drain any request body so the connection stays clean
-            length = int(self.headers.get("Content-Length") or 0)
+            try:
+                length = parse_content_length(self.headers.get("Content-Length"))
+            except ValueError:
+                return self.send_error(400, "Invalid Content-Length")
+            except OverflowError:
+                return self.send_error(413, "Request body too large")
             if length:
                 self.rfile.read(length)
             dropped = load_dropped()

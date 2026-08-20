@@ -1251,8 +1251,14 @@ html, body {
 @media (prefers-reduced-motion: reduce) {
   .pokeball, .poke-stage, .pokeball::after, .hint, .trainer-card::before,
   .dex-card::before, .wind, .clump, .mote, .bloom, .pb-sparkle, .sprite .hop,
-  .tcg-rays, .cloud, .side-shadow {
+  .tcg-rays, .cloud, .side-shadow, .pfoot-mon, .xp-detail.is-active {
     animation: none !important;
+  }
+  .pfoot-track, .pfoot-sprite, .pfoot-name, .pfoot-btn {
+    transition: none !important;
+  }
+  .pfoot-btn:hover, .pfoot-mon:hover .pfoot-sprite {
+    transform: none !important;
   }
   .side-avatar { animation: none !important; transform: translateX(-50%) !important; }
   /* show content without scroll animation */

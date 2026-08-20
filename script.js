@@ -390,6 +390,7 @@ let startInfoReveals = () => {};
 
   // the crowd on screen is capped, but the number shows the true global total
   let globalCount = null;
+  let backendAvailable = null;
   function refreshCount() {
     if (!count) return;
     const n = (globalCount != null) ? globalCount : track.children.length;
@@ -440,11 +441,13 @@ let startInfoReveals = () => {};
     try {
       const r = await fetch("/api/pokedrops", { cache: "no-store" });
       if (!r.ok) throw 0;
+      backendAvailable = true;
       const d = await r.json();
       if (typeof d.count === "number") globalCount = d.count;
       (d.recent || []).forEach((id) => render(id, false));
     } catch (e) {
       // no backend (opened as a file / offline): just start empty
+      backendAvailable = false;
     }
     fit();
     refreshCount();
@@ -452,16 +455,27 @@ let startInfoReveals = () => {};
 
   async function drop() {
     if (dropped) return;
+    if (backendAvailable === false) {
+      render(1 + Math.floor(Math.random() * 1025), true);
+      fit();
+      refreshCount();
+      lock("✓ Added on this device");
+      return;
+    }
     try {
       const r = await fetch("/api/pokedrops", { method: "POST" });
       if (!r.ok) throw 0;
+      backendAvailable = true;
       const d = await r.json();
       if (typeof d.count === "number") globalCount = d.count;
       render(d.added, true);
     } catch (e) {
-      // graceful fallback: still give the visitor their moment (client-only)
-      if (globalCount != null) globalCount += 1;
-      render(1 + Math.floor(Math.random() * 1025), true);
+      if (count) count.textContent = "Couldn’t save your drop — try again";
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = "Try again";
+      }
+      return;
     }
     fit();
     refreshCount();
